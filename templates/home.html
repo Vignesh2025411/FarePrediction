@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride Fare Prediction</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login {
+            width: 50%;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .mb-3 {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            text-align: center;
+            color: green;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login">
+    <h1>Ride Fare Prediction</h1>
+
+    <form action="{{ url_for('predict_datapoint') }}" method="post">
+
+        <!-- Weekend -->
+        <div class="mb-3">
+            <label class="form-label">Is Weekend</label>
+            <select class="form-control" name="is_weekend" required>
+                <option selected disabled value="">Select</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <!-- Peak Hour -->
+        <div class="mb-3">
+            <label class="form-label">Is Peak Hour</label>
+            <select class="form-control" name="is_peak_hour" required>
+                <option selected disabled value="">Select</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <!-- Trip Distance -->
+        <div class="mb-3">
+            <label class="form-label">Trip Distance (km)</label>
+            <input class="form-control" type="number" step="0.1"
+                   name="trip_distance_km"
+                   placeholder="Enter trip distance"
+                   required />
+        </div>
+
+        <!-- Passenger Count -->
+        <div class="mb-3">
+            <label class="form-label">Passenger Count</label>
+            <input class="form-control" type="number"
+                   name="passenger_count"
+                   placeholder="Enter passenger count"
+                   required />
+        </div>
+
+        <!-- Ride Type -->
+        <div class="mb-3">
+            <label class="form-label">Ride Type</label>
+            <select class="form-control" name="ride_type" required>
+                <option selected disabled value="">Select Ride Type</option>
+                <option value="UberX">UberX</option>
+                <option value="LyftPlus">LyftPlus</option>
+                <option value="UberXL">UberXL</option>
+                <option value="Standard">Standard</option>
+                <option value="Lyft">Lyft</option>
+            </select>
+        </div>
+
+        <!-- Vehicle Type -->
+        <div class="mb-3">
+            <label class="form-label">Vehicle Type</label>
+            <select class="form-control" name="vehicle_type" required>
+                <option selected disabled value="">Select Vehicle Type</option>
+                <option value="Hatchback">Hatchback</option>
+                <option value="SUV">SUV</option>
+                <option value="Sedan">Sedan</option>
+                <option value="Van">Van</option>
+            </select>
+        </div>
+
+        <!-- Weather -->
+        <div class="mb-3">
+            <label class="form-label">Weather</label>
+            <select class="form-control" name="weather" required>
+                <option selected disabled value="">Select Weather</option>
+                <option value="Clear">Clear</option>
+                <option value="Cloudy">Cloudy</option>
+                <option value="Rainy">Rainy</option>
+                <option value="Snowy">Snowy</option>
+            </select>
+        </div>
+
+        <!-- Traffic Level -->
+        <div class="mb-3">
+            <label class="form-label">Traffic Level</label>
+            <select class="form-control" name="traffic_level" required>
+                <option selected disabled value="">Select Traffic Level</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Very Heavy">Very Heavy</option>
+            </select>
+        </div>
+
+        <!-- Surge Multiplier -->
+        <div class="mb-3">
+            <label class="form-label">Surge Multiplier</label>
+            <input class="form-control" type="number" step="0.1"
+                   name="surge_multiplier"
+                   placeholder="Enter surge multiplier (e.g., 1.0)"
+                   required />
+        </div>
+
+        <!-- Submit -->
+        <div class="mb-3">
+            <input class="btn" type="submit" value="Predict Fare" />
+        </div>
+
+    </form>
+
+    {% if results %}
+    <h2>Predicted Fare: {{ results }}</h2>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
