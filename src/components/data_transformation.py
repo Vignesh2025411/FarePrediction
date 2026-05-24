@@ -99,7 +99,6 @@ class DataTransformation:
 
             # Define target column
             target_column_name = "fare"
-            numerical_columns =  ["is_weekend","is_peak_hour","trip_distance_km","passenger_count","surge_multiplier"]
 
             # Separate features and target for training data
             input_feature_train_df = train_df.drop(columns=[target_column_name])
